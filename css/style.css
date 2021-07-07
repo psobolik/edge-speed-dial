@@ -1,0 +1,191 @@
+/*Default styling here*/
+html {
+    /*height: 100%;*/
+}
+
+div.content {
+}
+
+div.title {
+    color: #555;
+    font-weight: bold;
+    font-size: 18pt;
+    display: inline-block;
+}
+
+div.link-card {
+    display: inline-block;
+    margin: 1px 6px;
+    width: 100px;
+}
+
+div.card {
+    text-align: center;
+    font-size: larger;
+    background-color: aliceblue;
+    display: inline-block;
+    border: solid thin lightsteelblue;
+    border-radius: 5%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 83%;
+    padding: 8%;
+    white-space: nowrap;
+}
+
+div.card:hover {
+    background-color: rgba(240, 248, 255, 0.2);
+}
+
+button.icon-button {
+    border: none;
+    background: none;
+    color: #555;
+    padding: 0;
+    margin: 0;
+}
+
+button.icon-button:hover {
+    text-shadow: 1px 1px 2px #555;
+}
+
+div.menu-panel {
+    text-align: right;
+    visibility: hidden;
+}
+
+div.menu-panel .icon-button {
+    font-size: large;
+    margin-left: 0.5em;
+    color: blue;
+}
+
+button#add-button,
+button#search-button {
+    font-size: x-large;
+    margin-left: 0.25em;
+}
+
+div.popup-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+div.popup-error {
+    border: solid thin red;
+}
+
+.error-message {
+    font-size: xx-large;
+    color: red;
+}
+
+div.popup {
+    padding: 0.55em;
+    background: #444;
+    color: #eee;
+    border-radius: 2px;
+    display: inline-block;
+    text-align: left;
+    /*top: 100px;*/
+    position: absolute;
+}
+
+div.popup .button-panel {
+    text-align: right;
+}
+
+div.popup p {
+    min-width: 200px;
+    text-align: center;
+}
+
+div.popup .button-panel button {
+    margin-left: 0.5em;
+}
+
+div.popup label,
+div.popup input,
+div.popup .button-panel {
+    margin: 0.5em;
+}
+
+div.search-panel {
+    margin: 6em 0 3em 0;
+    text-align: center;
+}
+
+div.search-panel input {
+    width: 50%;
+    font-size: x-large;
+    padding: 0.25em;
+    border: solid thin gray;
+}
+
+div.search-panel button {
+    font-size: x-large;
+}
+
+button.our-button {
+    color: white;
+    background-color: gray;
+    width: 6em;
+    height: 1.8em;
+    border: none;
+}
+
+button.our-button.ok-button {
+    background-color: dodgerblue;
+}
+
+/* Little larger screen*/
+@media only screen and (min-width: 480px) {
+    div.content {
+        margin: auto 25%;
+        width: 300px;
+    }
+}
+
+/* Pads and larger phones*/
+@media only screen and (min-width: 600px) {
+    div.content {
+        width: 300px;
+    }
+}
+
+/* Larger pads*/
+@media only screen and (min-width: 768px) {
+    div.content {
+        width: 450px;
+    }
+}
+
+/* Horizontal pads and laptops*/
+@media only screen and (min-width: 992px) {
+    div.content {
+        width: 600px;
+    }
+}
+
+/* Really large screens*/
+@media only screen and (min-width: 1382px) {
+    div.content {
+        width: 750px;
+    }
+}
+
+/* 2X size (iPhone 4 etc)*/
+/*@media only screen and (-webkit-min-device-pixel-ratio: 1.5),*/
+/*only screen and (-o-min-device-pixel-ratio: 3/2),*/
+/*only screen and (min-device-pixel-ratio: 1.5) {*/
+/*    content {*/
+/*        margin: auto 20px;*/
+/*    }*/
+
+/*}*/

@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Edge Speed Dial",
+  "version": "0.0.0.1",
+  "description": "Speed Dial Extension for Edge",
+  "author": "Paul Sobolik",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "bookmarks",
+    "search"
+  ],
+  "icons": {
+    "16": "/images/speed_dial16.png",
+    "32": "/images/speed_dial32.png",
+    "48": "/images/speed_dial48.png",
+    "128": "/images/speed_dial128.png"
+  }
+}
