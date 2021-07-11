@@ -10,6 +10,11 @@ body {
 div.content {
 }
 
+label {
+    color: #555;
+    font-weight: bold;
+    font-size: 18pt;
+}
 div.title {
     color: #555;
     font-weight: bold;
@@ -20,25 +25,44 @@ div.title {
 div.link-card {
     display: inline-block;
     margin: 1px 6px;
-    width: 100px;
+    width: 200px;
+    border: solid thin transparent;
+    border-radius: 5px;
+}
+
+div.link-card:hover {
+    background-color: #55555555;
+    border-color: #55555555;
+}
+
+div.link-card:hover div.card {
+    background-color: transparent;
+    border: none;
 }
 
 div.card {
     text-align: center;
     font-size: larger;
-    background-color: aliceblue;
+    background-color: #555555;
     display: inline-block;
-    border: solid thin lightsteelblue;
-    border-radius: 5%;
+    border: solid thin #555555;
+    border-radius: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 83%;
     padding: 8%;
     white-space: nowrap;
+    cursor: pointer;
 }
 
-div.card:hover {
-    background-color: rgba(240, 248, 255, 0.2);
+div.link-card a {
+    color: white;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+div.link-card:hover a {
+    color: #555555;
 }
 
 button.icon-button {
@@ -59,9 +83,9 @@ div.menu-panel {
 }
 
 div.menu-panel .icon-button {
-    font-size: large;
-    margin-left: 0.5em;
-    color: blue;
+    font-size: x-large;
+    margin-top: 0.25em;
+    margin-right: 0.25em;
 }
 
 button#add-button,
@@ -108,6 +132,7 @@ div.popup .button-panel {
 
 div.popup p {
     min-width: 200px;
+    max-width: 350px;
     text-align: center;
 }
 
@@ -124,7 +149,6 @@ div.popup .button-panel {
 div.search-panel {
     margin: 6em 0 3em 0;
     text-align: center;
-    font-size: x-large;
 }
 
 div.search-panel input {
@@ -181,7 +205,7 @@ button.our-button.ok-button {
 /* Horizontal pads and laptops*/
 @media only screen and (min-width: 992px) {
     div.content {
-        width: 600px;
+        width: 700px;
     }
 }
 

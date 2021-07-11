@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 doSearch();
             });
         document.getElementById('search-input')
-            .addEventListener('keypress', doSearch);
+            .addEventListener('keypress', (_event) => {
+                if (_event.key === 'Enter') doSearch();
+            });
 
         function doSearch() {
             const text = document.getElementById('search-input').value;
@@ -139,6 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 for (let i = 0, l = bookmarks.length; i < l; ++i) {
                     linksPanel.append(makeLinkCard(bookmarks[i]));
+                }
+
+                const cards = document.querySelectorAll('div.card');
+                for (let i = 0, l = cards.length; i < l; ++i) {
+                    cards[i].addEventListener('click', (_event) => {
+                       document.location = _event.target.querySelector('a').href;
+                    });
                 }
             }
 
