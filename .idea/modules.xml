@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/edge-speeddial.iml" filepath="$PROJECT_DIR$/.idea/edge-speeddial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/edge-speed-dial.iml" filepath="$PROJECT_DIR$/.idea/edge-speed-dial.iml" />
     </modules>
   </component>
 </project>

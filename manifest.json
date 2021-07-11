@@ -9,12 +9,17 @@
   },
   "permissions": [
     "bookmarks",
-    "search"
+    "search",
+    "tabs"
   ],
   "icons": {
     "16": "/images/speed_dial16.png",
     "32": "/images/speed_dial32.png",
     "48": "/images/speed_dial48.png",
     "128": "/images/speed_dial128.png"
+  },
+  "action": {
+    "default_title": "Add this page to Speed Dial",
+    "default_popup": "add_current_tab.html"
   }
 }

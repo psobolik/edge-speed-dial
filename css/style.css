@@ -3,6 +3,10 @@ html {
     /*height: 100%;*/
 }
 
+body {
+    margin: 0;
+}
+
 div.content {
 }
 
@@ -90,10 +94,11 @@ div.popup {
     padding: 0.55em;
     background: #444;
     color: #eee;
-    border-radius: 2px;
-    display: inline-block;
     text-align: left;
-    /*top: 100px;*/
+}
+
+div.popup-panel div.popup {
+    display: inline-block;
     position: absolute;
 }
 
@@ -119,17 +124,24 @@ div.popup .button-panel {
 div.search-panel {
     margin: 6em 0 3em 0;
     text-align: center;
+    font-size: x-large;
 }
 
 div.search-panel input {
     width: 50%;
-    font-size: x-large;
     padding: 0.25em;
     border: solid thin gray;
+    font-size: x-large;
+    margin-left: 0.25em;
+    margin-right: 0;
 }
 
 div.search-panel button {
-    font-size: x-large;
+    background-color: #555;
+    color: white;
+    border:solid thin #555;
+    border-radius: 10%;
+    padding: 0.125em;
 }
 
 button.our-button {

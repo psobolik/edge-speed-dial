@@ -1,6 +1,3 @@
-let g_parentId = '';
-const g_parentName = 'Speed Dial';
-
 document.addEventListener('DOMContentLoaded', () => {
     showBookmarks();
     setupAddButton();
@@ -30,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function doSearch() {
             const text = document.getElementById('search-input').value;
-            if (text) chrome.search.query({ 'text': text })
+            if (text) chrome.search.query({'text': text})
                 .catch((reason) => {
                     showErrorPopup(`${reason} (doSearch)`);
                 });
@@ -57,51 +54,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const okButton = popup.querySelector('.ok-button');
             okButton.addEventListener('click', saveBookmark);
             popup.addEventListener('keypress', (_event) => {
-                if (_event.key === 'Enter') saveBookmark({ target: okButton });
+                if (_event.key === 'Enter') saveBookmark({target: okButton});
             })
 
             popup.querySelector('.cancel-button')
                 .addEventListener('click', hideAddPopup);
 
             function saveBookmark(_event) {
-                const bookmark = {
-                    title: document.getElementById('add-name-input').value,
-                    url: document.getElementById('add-url-input').value
-                }
+                const title = document.getElementById('add-name-input').value;
+                const url = document.getElementById('add-url-input').value;
                 const id = _event.target.dataset.id;
                 if (id) {
-                    updateBookmark(id, bookmark);
+                    updateBookmark(id, title, url);
                 } else {
-                    bookmark.parentId = g_parentId;
-                    createBookmark(bookmark);
+                    createBookmark(title, url);
                 }
 
-                function createBookmark(bookmark) {
-                    if (bookmark.title && bookmark.url && bookmark.parentId) {
-                        chrome.bookmarks.create(bookmark)
-                            .then((result) => {
-                                hideAddPopup();
-                            })
-                            .catch((reason) => {
-                                showErrorPopup(`${reason} (createBookmark)`);
-                            });
-                    } else {
-                        showErrorPopup(`Error: Both Name and URL are required. [createBookmark]`)
-                    }
+                function createBookmark(title, url) {
+                    SpeedDial.saveBookmark(title, url)
+                        .then(hideAddPopup)
+                        .catch((reason) => {
+                            showErrorPopup(`${reason} (createBookmark)`)
+                        });
                 }
 
-                function updateBookmark(id, bookmark) {
-                    if (bookmark.title && bookmark.url) {
-                        chrome.bookmarks.update(id, bookmark)
-                            .then((result) => {
-                                hideAddPopup();
-                            })
-                            .catch((reason) => {
-                                showErrorPopup(`${reason} (updateBookmark)`);
-                            });
-                    } else {
-                        showErrorPopup(`Error: Both Name and URL are required. [updateBookmark]`)
-                    }
+                function updateBookmark(id, title, url) {
+                    SpeedDial.updateBookmark(id, title, url)
+                        .then(hideAddPopup)
+                        .catch((reason) => {
+                            showErrorPopup(`${reason} (updateBookmark)`);
+                        });
                 }
             }
         }
@@ -113,11 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 .addEventListener('click', hideDeletePopup);
 
             function removeBookmark(_event) {
-                chrome.bookmarks.remove(_event.target.dataset.id)
+                SpeedDial.deleteBookmark(_event.target.dataset.id)
+                    .then(hideDeletePopup)
                     .catch((reason) => {
                         showErrorPopup(`${reason} (removeBookmark)`);
                     });
-                hideDeletePopup();
             }
         }
 
@@ -132,38 +114,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showBookmarks() {
         document.getElementById('links').innerHTML = '';
-        g_parentId = '';
-        chrome.bookmarks.search({
-            title: g_parentName
-        })
-            .then((nodes) => {
-                for (let i = 0, l = nodes.length; i < l; ++i) {
-                    const node = nodes[i];
-                    if (!node.url) { // If the node is not a bookmark (i.e. if it's a folder)
-                        if (g_parentId === '')
-                            g_parentId = node.id;
-                        chrome.bookmarks.getSubTree(node.id)
-                            .then((subNodes) => {
-                                for (let i = 0, l = subNodes.length; i < l; ++i) {
-                                    displayBookmarks(subNodes[i].children);
-                                }
-                            })
-                            .catch((reason) => {
-                                showErrorPopup(`${reason} (showBookmarks)`);
-                            })
-                    }
-                }
-                if (g_parentId === '') {
-                    // Create the Speed Dial folder in the first folder,
-                    // which should be the Bookmarks bar
-                    chrome.bookmarks.create({title: g_parentName, parentId: '1'})
+        SpeedDial.getSpeedDialFolders()
+            .then((folders) => {
+                for (let i = 0, l = folders.length; i < l; ++i) {
+                    const folder = folders[i];
+                    chrome.bookmarks.getSubTree(folder.id)
+                        .then((subNodes) => {
+                            for (let i = 0, l = subNodes.length; i < l; ++i) {
+                                displayBookmarks(subNodes[i].children);
+                            }
+                        })
                         .catch((reason) => {
-                            showErrorPopup(`${reason} [showBookmarks]`);
-                        });
+                            showErrorPopup(`${reason} (showBookmarks)`);
+                        })
                 }
             })
             .catch((reason) => {
-                showErrorPopup(`${reason} {showBookmarks}`);
+                showErrorPopup(`${reason} (showBookmarks)`);
             });
 
         function displayBookmarks(bookmarks) {
