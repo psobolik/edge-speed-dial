@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setupChromeListeners();
 
     function setupChromeListeners() {
-        chrome.bookmarks.onRemoved.addListener((id, changeInfo) => {
+        chrome.bookmarks.onRemoved.addListener(() => {
             showBookmarks();
         });
-        chrome.bookmarks.onChanged.addListener((id, changeInfo) => {
+        chrome.bookmarks.onChanged.addListener(() => {
             showBookmarks();
         });
-        chrome.bookmarks.onCreated.addListener((id, changeInfo) => {
+        chrome.bookmarks.onCreated.addListener(() => {
             showBookmarks();
         });
     }
@@ -29,10 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function doSearch() {
             const text = document.getElementById('search-input').value;
-            if (text) chrome.search.query({'text': text})
-                .catch((reason) => {
-                    showErrorPopup(`${reason} (doSearch)`);
-                });
+            if (text)
+                chrome.search.query({'text': text}, () => {});
         }
     }
 
@@ -173,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     function makeIconButton(text, bookmark, iconClass, action) {
                         const button = document.createElement('button');
+                        button.type = 'button';
                         button.classList.add('icon-button');
                         button.append(makeIconElement(text, bookmark, iconClass, action));
                         return button;
@@ -234,6 +233,7 @@ function showAddPopup(bookmark) {
     document.getElementById('add-url-input').value = bookmark ? bookmark.url : '';
     const nameInput = document.getElementById('add-name-input');
     nameInput.value = bookmark ? bookmark.title : '';
+    document.getElementById('add-prompt').innerText = bookmark ? 'Edit Speed Dial bookmark' : 'Add bookmark to Speed Dial';
     showPopup('add-popup');
     nameInput.focus();
 }

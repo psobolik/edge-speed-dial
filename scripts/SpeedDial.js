@@ -20,20 +20,14 @@ const SpeedDial = {
 
         async function _findSpeedDialFolders(speedDialFolderName) {
             return new Promise(function (resolve, reject) {
-                let result = [];
                 chrome.bookmarks.search({
                     title: speedDialFolderName
                 })
                     .then((nodes) => {
-                        for (let i = 0, l = nodes.length; i < l; ++i) {
-                            const node = nodes[i];
-                            if (!node.url) { // If the node is a folder, i.e. not a bookmark
-                                result.push(node);
-                            }
-                        }
-                        if (result.length > 0) resolve(result);
-                        else reject("Can't create Speed Dial folder");
-                    });
+                        const folders = nodes.filter(node => !node.url); // Filter out bookmarks
+                        if (folders.length > 0) resolve(folders);
+                        else reject ("Can't find Speed Dial folder");
+                    })
             })
         }
 
@@ -55,7 +49,8 @@ const SpeedDial = {
 
     saveBookmark: async (title, url) => {
         return new Promise(function (resolve, reject) {
-            if (title === null || title.length === 0 || url === null || url.length === 0) reject(`Error: Both Name and URL are required.`);
+            if (title === null || title.length === 0 || url === null || url.length === 0)
+                reject(`Error: Both Name and URL are required.`);
             else {
                 SpeedDial.getSpeedDialFolders()
                     .then((folders) => {
@@ -83,7 +78,8 @@ const SpeedDial = {
     updateBookmark: async (id, title, url) => {
         return new Promise((resolve, reject) => {
             if (!id) reject('Error: Missing bookmark ID');
-            else if (title === null || title.length === 0 || url === null || url.length === 0) reject(`Error: Both Name and URL are required.`);
+            else if (title === null || title.length === 0 || url === null || url.length === 0)
+                reject(`Error: Both Name and URL are required.`);
             else  {
                 chrome.bookmarks.update(id, {title: title, url: url})
                     .then((result) => {

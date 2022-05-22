@@ -1,22 +1,35 @@
-/*Default styling here*/
+:root {
+    --body-color: #f8f8ff;
+    --main-color: #696969;
+    --popup-bg: #444;
+    --popup-color: #eee;
+    --popup-label-color: #aaa;
+    --div-card-hover-bg: #ddd;
+    --card-link-color: #fff;
+    --card-link-bg: transparent;
+    --overlay-color: #00000088;
+    --hilite-color: #fff;
+}
+
 html {
     /*height: 100%;*/
 }
 
 body {
     margin: 0;
+    background-color: var(--body-color);
 }
 
 div.content {
 }
 
 label {
-    color: #555;
+    color: var(--main-color);
     font-weight: bold;
     font-size: 18pt;
 }
 div.title {
-    color: #555;
+    color: var(--main-color);
     font-weight: bold;
     font-size: 18pt;
     display: inline-block;
@@ -26,26 +39,18 @@ div.link-card {
     display: inline-block;
     margin: 1px 6px;
     width: 200px;
-    border: solid thin transparent;
-    border-radius: 5px;
-}
-
-div.link-card:hover {
-    background-color: #55555555;
-    border-color: #55555555;
 }
 
 div.link-card:hover div.card {
-    background-color: transparent;
-    border: none;
+    background-color: var(--div-card-hover-bg);
 }
 
 div.card {
     text-align: center;
     font-size: larger;
-    background-color: #555555;
+    background-color: var(--main-color);
     display: inline-block;
-    border: solid thin #555555;
+    border: solid thin var(--main-color);
     border-radius: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -56,25 +61,19 @@ div.card {
 }
 
 div.link-card a {
-    color: white;
+    color: var(--card-link-color);
     font-weight: bold;
-    background-color: transparent;
+    background-color: var(--card-link-bg);
 }
 
 div.link-card:hover a {
-    color: #555555;
+    color: var(--main-color);
 }
 
 button.icon-button {
-    border: none;
-    background: none;
-    color: #555;
-    padding: 0;
-    margin: 0;
-}
-
-button.icon-button:hover {
-    text-shadow: 1px 1px 2px #555;
+    font-size: x-large;
+    border-radius: 10%;
+    padding: 0.125em;
 }
 
 div.menu-panel {
@@ -82,16 +81,29 @@ div.menu-panel {
     visibility: hidden;
 }
 
-div.menu-panel .icon-button {
-    font-size: x-large;
+div.menu-panel button.icon-button {
+    background-color: transparent;
+    border: none;
     margin-top: 0.25em;
     margin-right: 0.25em;
+    color: var(--main-color);
+}
+
+div.menu-panel button.icon-button:hover {
+    text-shadow: 1px 1px 2px var(--main-color);
 }
 
 button#add-button,
 button#search-button {
-    font-size: x-large;
     margin-left: 0.25em;
+    background-color: var(--main-color);
+    color: var(--hilite-color);
+}
+
+button#add-button:hover,
+button#search-button:hover {
+    background-color: var(--hilite-color);
+    color: var(--main-color);
 }
 
 div.popup-panel {
@@ -101,7 +113,7 @@ div.popup-panel {
     text-align: center;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-color);
     display: none;
 }
 
@@ -115,9 +127,9 @@ div.popup-error {
 }
 
 div.popup {
-    padding: 0.55em;
-    background: #444;
-    color: #eee;
+    padding: 0.55em 1.55em;
+    background: var(--popup-bg);
+    color: var(--popup-color);
     text-align: left;
 }
 
@@ -126,18 +138,37 @@ div.popup-panel div.popup {
     position: absolute;
 }
 
-div.popup .button-panel {
-    text-align: right;
-}
-
 div.popup p {
     min-width: 200px;
     max-width: 350px;
     text-align: center;
 }
 
+div.popup .button-panel {
+    text-align: right;
+}
+
 div.popup .button-panel button {
     margin-left: 0.5em;
+    color: white;
+    background-color: gray;
+    width: 6em;
+    height: 1.8em;
+    border: none;
+}
+
+div.popup .button-panel button.ok-button {
+    background-color: dodgerblue;
+}
+
+div.popup label {
+    color: var(--popup-label-color);
+    font-weight: normal;
+    font-size: 8pt;
+}
+
+div.popup input {
+    min-width: 200px;
 }
 
 div.popup label,
@@ -158,26 +189,6 @@ div.search-panel input {
     font-size: x-large;
     margin-left: 0.25em;
     margin-right: 0;
-}
-
-div.search-panel button {
-    background-color: #555;
-    color: white;
-    border:solid thin #555;
-    border-radius: 10%;
-    padding: 0.125em;
-}
-
-button.our-button {
-    color: white;
-    background-color: gray;
-    width: 6em;
-    height: 1.8em;
-    border: none;
-}
-
-button.our-button.ok-button {
-    background-color: dodgerblue;
 }
 
 /* Little larger screen*/

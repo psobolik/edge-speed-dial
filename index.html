@@ -11,29 +11,42 @@
 </head>
 <body>
 <div class="content">
-    <div class="search-panel"><label>Search<input id="search-input" placeholder="Search the web"/></label><button class="icon-button" id="search-button" title="Search"><span class="fas fa-search"></span></button></div>
-    <label class="title">Speed Dial</label><button id="add-button" class="icon-button" title="Add Bookmark"><span class="fas fa-plus-square"></span></button>
+    <div class="search-panel">
+        <label>Search<input id="search-input" placeholder="Search the web"/></label>
+        <button type="button" class="icon-button" id="search-button" title="Search"><span class="fas fa-search"></span></button>
+    </div>
+    <label class="title">Speed Dial</label>
+    <button type="button" id="add-button" class="icon-button" title="Add Bookmark"><span class="fas fa-plus"></span></button>
     <div id="links"></div>
 </div>
 <div class="popup-panel" id="add-popup">
     <div class="popup">
+        <p id="add-prompt">Add bookmark to Speed Dial</p>
         <div><label for="add-name-input">Name</label></div>
         <div><input id="add-name-input" placeholder="Name"/></div>
         <div><label for="add-url-input">URL</label></div>
         <div><input id="add-url-input" placeholder="URL"/></div>
-        <div class="button-panel"><button class="our-button ok-button">Save</button><button class="our-button cancel-button">Cancel</button></div>
+        <div class="button-panel">
+            <button type="button" class="ok-button">Save</button>
+            <button type="button" class="cancel-button">Cancel</button>
+        </div>
     </div>
 </div>
 <div class="popup-panel" id="delete-popup">
     <div class="popup">
-        <p style="font-size: larger;">Delete bookmark?</p>
-        <div class="button-panel"><button class="our-button ok-button" tabindex="1">OK</button><button class="our-button cancel-button" tabindex="1">Cancel</button></div>
+        <p>Delete Speed Dial bookmark?</p>
+        <div class="button-panel">
+            <button type="button" class="ok-button" tabindex="1">OK</button>
+            <button type="button" class="cancel-button" tabindex="1">Cancel</button>
+        </div>
     </div>
 </div>
 <div class="popup-panel" id="error-popup">
     <div class="popup popup-error">
         <p class="error-message">Error!</p>
-        <div class="button-panel"><button class="our-button ok-button">OK</button></div>
+        <div class="button-panel">
+            <button type="button" class="ok-button">OK</button>
+        </div>
     </div>
 </div>
 </body>
