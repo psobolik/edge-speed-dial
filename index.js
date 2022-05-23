@@ -42,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setupPopups() {
-        window.addEventListener('resize', (_event) => {
-            placePopups();
-        });
         setupAddPopup();
         setupDeletePopup();
         setupErrorPopup();
@@ -266,9 +263,6 @@ function hideErrorPopup() {
 function showPopup(id) {
     const panel = document.getElementById(id);
     panel.style.display = 'block';
-    const popup = panel.querySelector('.popup');
-    const left = (panel.scrollWidth - popup.scrollWidth) / 2;
-    popup.style.left = `${left}px`;
 }
 
 function hidePopup(id) {

@@ -21,6 +21,8 @@ body {
 }
 
 div.content {
+    margin: auto 25%;
+    width: 300px;
 }
 
 label {
@@ -135,7 +137,7 @@ div.popup {
 
 div.popup-panel div.popup {
     display: inline-block;
-    position: absolute;
+    margin-top: 1em;
 }
 
 div.popup p {
@@ -194,7 +196,6 @@ div.search-panel input {
 /* Little larger screen*/
 @media only screen and (min-width: 480px) {
     div.content {
-        margin: auto 25%;
         width: 300px;
     }
 }
@@ -202,28 +203,28 @@ div.search-panel input {
 /* Pads and larger phones*/
 @media only screen and (min-width: 600px) {
     div.content {
-        width: 300px;
+        width: 480px;
     }
 }
 
 /* Larger pads*/
 @media only screen and (min-width: 768px) {
     div.content {
-        width: 450px;
+        width: 600px;
     }
 }
 
 /* Horizontal pads and laptops*/
 @media only screen and (min-width: 992px) {
     div.content {
-        width: 700px;
+        width: 768px;
     }
 }
 
 /* Really large screens*/
 @media only screen and (min-width: 1382px) {
     div.content {
-        width: 750px;
+        width: 992px;
     }
 }
 
