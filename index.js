@@ -19,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupSearchButton() {
         document.getElementById('search-button')
-            .addEventListener('click', (_event) => {
+            .addEventListener('click', _event => {
                 doSearch();
             });
         document.getElementById('search-input')
-            .addEventListener('keypress', (_event) => {
+            .addEventListener('keypress', _event => {
                 if (_event.key === 'Enter') doSearch();
             });
-
         function doSearch() {
             const text = document.getElementById('search-input').value;
             if (text)
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setupAddButton() {
         document.getElementById('add-button')
-            .addEventListener('click', (_event) => {
+            .addEventListener('click', _event => {
                 showAddPopup();
             });
     }
@@ -50,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const popup = document.getElementById('add-popup');
             const okButton = popup.querySelector('.ok-button');
             okButton.addEventListener('click', saveBookmark);
-            popup.addEventListener('keypress', (_event) => {
+            popup.addEventListener('keypress', _event => {
                 if (_event.key === 'Enter') saveBookmark({target: okButton});
             })
 
@@ -58,9 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 .addEventListener('click', hideAddPopup);
 
             function saveBookmark(_event) {
-                const title = document.getElementById('add-name-input').value;
-                const url = document.getElementById('add-url-input').value;
-                const id = _event.target.dataset.id;
+                const popup = document.getElementById('add-popup');
+                const id = popup.querySelector('.ok-button').dataset.id;
+                const url = popup.querySelector('#add-url-input').value;
+                const title = popup.querySelector('#add-name-input').value;
                 if (id) {
                     updateBookmark(id, title, url);
                 } else {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 function createBookmark(title, url) {
                     SpeedDial.saveBookmark(title, url)
                         .then(hideAddPopup)
-                        .catch((reason) => {
+                        .catch(reason => {
                             showErrorPopup(`${reason} (createBookmark)`)
                         });
                 }
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 function updateBookmark(id, title, url) {
                     SpeedDial.updateBookmark(id, title, url)
                         .then(hideAddPopup)
-                        .catch((reason) => {
+                        .catch(reason => {
                             showErrorPopup(`${reason} (updateBookmark)`);
                         });
                 }
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             function removeBookmark(_event) {
                 SpeedDial.deleteBookmark(_event.target.dataset.id)
                     .then(hideDeletePopup)
-                    .catch((reason) => {
+                    .catch(reason => {
                         showErrorPopup(`${reason} (removeBookmark)`);
                     });
             }
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function setupErrorPopup() {
             document.getElementById('error-popup')
                 .querySelector('.ok-button')
-                .addEventListener('click', (_event) => {
+                .addEventListener('click', _event => {
                     hideErrorPopup();
                 });
         }
@@ -112,21 +112,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function showBookmarks() {
         document.getElementById('links').innerHTML = '';
         SpeedDial.getSpeedDialFolders()
-            .then((folders) => {
+            .then(folders => {
                 for (let i = 0, l = folders.length; i < l; ++i) {
                     const folder = folders[i];
                     chrome.bookmarks.getSubTree(folder.id)
-                        .then((subNodes) => {
+                        .then(subNodes => {
                             for (let i = 0, l = subNodes.length; i < l; ++i) {
                                 displayBookmarks(subNodes[i].children);
                             }
                         })
-                        .catch((reason) => {
+                        .catch(reason => {
                             showErrorPopup(`${reason} (showBookmarks)`);
                         })
                 }
             })
-            .catch((reason) => {
+            .catch(reason => {
                 showErrorPopup(`${reason} (showBookmarks)`);
             });
 
@@ -140,18 +140,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const cards = document.querySelectorAll('div.card');
                 for (let i = 0, l = cards.length; i < l; ++i) {
-                    cards[i].addEventListener('click', (_event) => {
-                       document.location = _event.target.querySelector('a').href;
+                    cards[i].addEventListener('click', _event => {
+                        document.location = _event.target.href ?? _event.target.querySelector('a').href;
                     });
                 }
             }
 
             function makeLinkCard(bookmark) {
                 const linkCard = document.createElement('div');
-                linkCard.addEventListener('mouseenter', (_event) => {
+                linkCard.addEventListener('mouseenter', _event => {
                     _event.target.querySelector('.menu-panel').style.visibility = 'visible';
                 })
-                linkCard.addEventListener('mouseleave', (_event) => {
+                linkCard.addEventListener('mouseleave', _event => {
                     _event.target.querySelector('.menu-panel').style.visibility = 'hidden';
                 })
                 linkCard.setAttribute('class', 'link-card');
@@ -225,12 +225,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function showAddPopup(bookmark) {
-    document.getElementById('add-popup')
-        .querySelector('.ok-button').dataset.id = bookmark ? bookmark.id : '';
-    document.getElementById('add-url-input').value = bookmark ? bookmark.url : '';
-    const nameInput = document.getElementById('add-name-input');
-    nameInput.value = bookmark ? bookmark.title : '';
-    document.getElementById('add-prompt').innerText = bookmark ? 'Edit Speed Dial bookmark' : 'Add bookmark to Speed Dial';
+    const popup = document.getElementById('add-popup');
+    popup.querySelector('.ok-button').dataset.id = bookmark ? bookmark.id : '';
+    popup.querySelector('#add-url-input').value  = bookmark ? bookmark.url : '';
+    popup.querySelector('#add-name-input').value = bookmark ? bookmark.title : '';
+    const nameInput = popup.querySelector('#add-prompt');
+    nameInput.innerText = bookmark ? 'Edit Speed Dial bookmark' : 'Add bookmark to Speed Dial';
     showPopup('add-popup');
     nameInput.focus();
 }
@@ -240,7 +240,8 @@ function hideAddPopup() {
 }
 
 function showDeletePopup(id) {
-    const okButton = document.getElementById('delete-popup').querySelector('.ok-button');
+    const okButton = document.getElementById('delete-popup')
+        .querySelector('.ok-button');
     okButton.dataset.id = id;
     showPopup('delete-popup');
     okButton.focus();

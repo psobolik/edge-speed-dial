@@ -9,8 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .then((selectedTabs) => {
             if (selectedTabs.length > 0) {
                 const selectedTab = selectedTabs[0];
-                document.getElementById('add-name-input').value = selectedTab.title;
-                document.getElementById('add-url-input').value = selectedTab.url;
+                popup.querySelector('#add-name-input').value = selectedTab.title;
+                popup.querySelector('#add-url-input').value = selectedTab.url;
             }
         })
     popup.querySelector('.cancel-button')
@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function saveBookmark() {
-        SpeedDial.saveBookmark(document.getElementById('add-name-input').value, document.getElementById('add-url-input').value)
+        const popup = document.getElementById('event-popup');
+        SpeedDial.saveBookmark(popup.querySelector('#add-name-input').value, popup.querySelector('#add-url-input').value)
             .then(() => {
                 window.close();
             })
