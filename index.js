@@ -113,18 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('links').innerHTML = '';
         SpeedDial.getSpeedDialFolders()
             .then(folders => {
-                for (let i = 0, l = folders.length; i < l; ++i) {
-                    const folder = folders[i];
+                folders.forEach(folder => {
                     chrome.bookmarks.getSubTree(folder.id)
                         .then(subNodes => {
-                            for (let i = 0, l = subNodes.length; i < l; ++i) {
-                                displayBookmarks(subNodes[i].children);
-                            }
+                            subNodes.forEach (subNode => {
+                                displayBookmarks(subNode.children);
+                            })
                         })
                         .catch(reason => {
                             showErrorPopup(`${reason} (showBookmarks)`);
                         })
-                }
+                })
             })
             .catch(reason => {
                 showErrorPopup(`${reason} (showBookmarks)`);
@@ -134,16 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (bookmarks) {
                 const linksPanel = document.getElementById('links');
 
-                for (let i = 0, l = bookmarks.length; i < l; ++i) {
-                    linksPanel.append(makeLinkCard(bookmarks[i]));
-                }
+                bookmarks.forEach (bookmark => {
+                    linksPanel.append(makeLinkCard(bookmark));
+                })
 
                 const cards = document.querySelectorAll('div.card');
-                for (let i = 0, l = cards.length; i < l; ++i) {
-                    cards[i].addEventListener('click', _event => {
+                cards.forEach(card => {
+                    card.addEventListener('click', _event => {
                         document.location = _event.target.href ?? _event.target.querySelector('a').href;
                     });
-                }
+                })
             }
 
             function makeLinkCard(bookmark) {
