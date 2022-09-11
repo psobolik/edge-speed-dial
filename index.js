@@ -115,9 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(folders => {
                 folders.forEach(folder => {
                     chrome.bookmarks.getSubTree(folder.id)
-                        .then(subNodes => {
-                            subNodes.forEach (subNode => {
-                                displayBookmarks(subNode.children);
+                        .then(nodes => {
+                            nodes.forEach (node => {
+                                displayBookmarks(node.children);
                             })
                         })
                         .catch(reason => {
@@ -128,13 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(reason => {
                 showErrorPopup(`${reason} (showBookmarks)`);
             });
-
         function displayBookmarks(bookmarks) {
             if (bookmarks) {
                 const linksPanel = document.getElementById('links');
 
                 bookmarks.forEach (bookmark => {
-                    linksPanel.append(makeLinkCard(bookmark));
+                    if (bookmark.url)
+                        linksPanel.append(makeLinkCard(bookmark));
+                    else
+                        displayBookmarks(bookmark.children)
                 })
 
                 const cards = document.querySelectorAll('div.card');
